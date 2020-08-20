@@ -1,24 +1,35 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import PayPalBtn from './components/PayPalBtn'
+
+const paypalSubscribe = (data, actions) => {
+  return actions.subscription.create({
+    'plan_id': "Plan-ID",
+  });
+};
+
+const paypalOnError = (err) => {
+  console.log("Error")
+}
+
+const paypalOnApprove = (data, detail) => {
+  console.log("Payapl approved")
+};
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+              <PayPalBtn
+                amount = "50"
+                currency = "USD"
+                createSubscription={paypalSubscribe}
+                onApprove={paypalOnApprove}
+                catchError={paypalOnError}
+                onError={paypalOnError}
+                onCancel={paypalOnError}
+            />
     </div>
   );
 }
